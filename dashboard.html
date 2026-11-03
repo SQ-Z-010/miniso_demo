@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>名创优品英国线上商品观察</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --line:#e5e7eb; --ink:#111827; --ink2:#4b5563;
+    --ink3:#6b7280; --accent:#2563eb; --accent-soft:#dbeafe; --warn:#b45309;
+    --warn-soft:#fef3c7; --ok:#047857; --ok-soft:#d1fae5; --neutral:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  header{margin-bottom:22px}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:.5px}
+  .sub{margin:0;color:var(--ink2);font-size:15px}
+  .meta{margin-top:10px;color:var(--ink3);font-size:13px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;margin-bottom:16px}
+  h2{margin:0 0 14px;font-size:16px;font-weight:600}
+  .hint{color:var(--ink3);font-size:12px;margin:-8px 0 14px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .k-label{font-size:12px;color:var(--ink3)}
+  .kpi .k-value{font-size:26px;font-weight:600;margin:4px 0 2px}
+  .kpi .k-den{font-size:11px;color:var(--ink3)}
+  .filters{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:12px;color:var(--ink3)}
+  input[type=text],select{font:inherit;font-size:14px;padding:7px 10px;
+    border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  input[type=text]{min-width:230px}
+  button{font:inherit;font-size:14px;padding:8px 14px;border-radius:8px;
+    border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+  button:hover{background:var(--accent-soft);border-color:var(--accent)}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}
+    .charts{grid-template-columns:1fr}}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
+  .bar-label{flex:0 0 116px;color:var(--ink2);overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  .bar-track{flex:1;background:var(--neutral);border-radius:6px;height:16px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--accent);border-radius:6px;min-width:2px}
+  .bar-fill.alt{background:#7c3aed}
+  .bar-fill.green{background:var(--ok)}
+  .bar-value{flex:0 0 106px;text-align:right;color:var(--ink3);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;color:var(--ink3);font-weight:600;background:#fafafa;
+    position:sticky;top:0;cursor:pointer;user-select:none;white-space:nowrap}
+  th:hover{color:var(--accent)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tbody tr:hover{background:#f9fafb}
+  .table-scroll{max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:10px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;white-space:nowrap}
+  .tag.ok{background:var(--ok-soft);color:var(--ok)}
+  .tag.warn{background:var(--warn-soft);color:var(--warn)}
+  .tag.gray{background:var(--neutral);color:var(--ink2)}
+  .empty{padding:30px;text-align:center;color:var(--ink3);font-size:14px}
+  .empty strong{display:block;color:var(--ink2);margin-bottom:6px;font-size:15px}
+  footer{color:var(--ink3);font-size:12.5px}
+  footer h3{font-size:14px;color:var(--ink2);margin:0 0 8px}
+  footer ul{margin:0 0 14px;padding-left:20px}
+  footer li{margin-bottom:5px}
+  .count-line{font-size:13px;color:var(--ink2);margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>名创优品英国线上商品观察</h1>
+  <p class="sub">前3页商品样本的结构、价格带与折扣分析</p>
+  <p class="meta">数据来源：minisoshop.co.uk 商品列表页前 3 页 ｜ 页面生成时间：2026-11-03 01:22 UTC ｜
+     全部统计由页面内嵌数据实时计算</p>
+</header>
+
+<section class="kpis">
+  <div class="kpi"><div class="k-label">样本数量（当前筛选）</div>
+    <div class="k-value" id="kpi-count">–</div>
+    <div class="k-den" id="kpi-count-den"></div></div>
+  <div class="kpi"><div class="k-label">采集时间（UTC）</div>
+    <div class="k-value" id="kpi-time" style="font-size:17px">–</div>
+    <div class="k-den">取当前筛选结果的最早与最晚采集时间</div></div>
+  <div class="kpi"><div class="k-label">价格中位数</div>
+    <div class="k-value" id="kpi-median">–</div>
+    <div class="k-den" id="kpi-median-den"></div></div>
+  <div class="kpi"><div class="k-label">已确认折扣商品占比</div>
+    <div class="k-value" id="kpi-discount">–</div>
+    <div class="k-den" id="kpi-discount-den"></div></div>
+</section>
+
+<section class="card">
+  <h2>筛选与排序</h2>
+  <p class="hint">下方所有指标、图表和明细表都会随筛选同步更新。</p>
+  <div class="filters">
+    <div class="field"><label for="f-search">商品名称搜索</label>
+      <input type="text" id="f-search" placeholder="输入关键词，如 tumbler"></div>
+    <div class="field"><label for="f-cat">统一品类</label><select id="f-cat"></select></div>
+    <div class="field"><label for="f-ip">IP 形象</label><select id="f-ip"></select></div>
+    <div class="field"><label for="f-st">折扣状态</label><select id="f-st"></select></div>
+    <div class="field"><label for="f-sort">排序</label><select id="f-sort">
+      <option value="price-asc">价格：从低到高</option>
+      <option value="price-desc">价格：从高到低</option>
+      <option value="discount-desc">折扣率：从高到低</option>
+      <option value="name-asc">名称：A → Z</option>
+    </select></div>
+    <button id="btn-reset">重置筛选</button>
+  </div>
+</section>
+
+<section class="charts">
+  <div class="card"><h2>价格带分布</h2>
+    <p class="hint" id="hint-band"></p><div id="chart-band"></div></div>
+  <div class="card"><h2>统一品类分布</h2>
+    <p class="hint" id="hint-cat"></p><div id="chart-cat"></div></div>
+  <div class="card"><h2>各品类价格中位数</h2>
+    <p class="hint" id="hint-catprice"></p><div id="chart-catprice"></div></div>
+  <div class="card"><h2>IP 分布</h2>
+    <p class="hint" id="hint-ip"></p><div id="chart-ip"></div></div>
+</section>
+
+<section class="card">
+  <h2>商品明细</h2>
+  <p class="count-line" id="table-count"></p>
+  <div class="table-scroll">
+    <table id="table">
+      <thead><tr>
+        <th id="th-name">商品名称（点击访问来源页面）</th>
+        <th id="th-cat">统一品类</th>
+        <th>IP</th>
+        <th id="th-price">现价</th>
+        <th>原价</th>
+        <th id="th-discount">折扣率</th>
+        <th>折扣状态</th>
+        <th>来源页</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div id="empty" class="empty" style="display:none"></div>
+</section>
+
+<footer class="card">
+  <h3>说明</h3>
+  <ul>
+    <li><strong>数据来源</strong>：名创优品英国商城商品列表页
+      <a href="https://minisoshop.co.uk/shop" target="_blank" rel="noopener">minisoshop.co.uk/shop</a>
+      的前 3 页（<code>/shop</code>、<code>/shop?p=2</code>、<code>/shop?p=3</code>），
+      由本地可见浏览器采集，仅取列表页公开信息，未采集商品详情页。</li>
+    <li><strong>分类方法</strong>：统一分析分类采用“商品名称类型关键词优先、站点自带品类兜底”，
+      单一层级互斥；原始分类（站点品类优先那一版）在明细表中保留，可对照。
+      IP 依据名称关键词识别，判断不出的一律标“未识别”，不猜测。</li>
+    <li><strong>统计分母</strong>：占比类指标分母为当前筛选后的样本数；
+      价格类指标分母为现价有效的样本数；折扣率只对“确认打折”的商品计算；
+      原价缺失一律记“无法判断”，不认定为未打折，也不反推原价。</li>
+    <li><strong>样本局限</strong>：本次仅采集前 3 页共 106 条，页面标注全站约 233 条，
+      <strong>不覆盖全站</strong>；前 3 页为站点“推荐”排序结果，哈利波特系列占比偏高，
+      样本结构不代表全站结构。所有结论仅限本次样本，
+      <strong>不推断销量、利润、爆款或消费者偏好</strong>。</li>
+    <li><strong>合规提示</strong>：站点 robots.txt 与使用条款在本次采集中未能取得正文，
+      运行者应自行确认是否允许采集。</li>
+  </ul>
+</footer>
+
+</div>
+
+<script>
+const DATA = [{"n":"Mikko Souffle Strawberry Collection 16 Inch Head Pillow","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Mikko","cp":9.99,"op":14.99,"st":"确认打折","dp":33.4,"u":"https://minisoshop.co.uk/mikko-strawberry-collection-16in-head-shaped-pillow-souffle","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Disney Stitch Dinner Party Plush Sleep Mask Stitch","c":"毛绒玩具","oc":"生活家居","cs":"名称规则","ip":"Disney（迪士尼）","cp":3.99,"op":6.99,"st":"确认打折","dp":42.9,"u":"https://minisoshop.co.uk/disney-stitch-dinner-party-plush-sleep-mask-stitch","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Sanrio Hello Kitty & Friends Classic Collection Denim 14 Inch Plush Soft Toy","c":"毛绒玩具","oc":"毛绒玩具","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":19.99,"op":24.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/hello-kitty-classic-collection-14in-denim-kitty-sitting-posture-plush-toy","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Sanrio Hello Kitty & Friends Hello Kitty 21 Inch Sitting Plush Soft Toy","c":"毛绒玩具","oc":"毛绒玩具","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":36.79,"op":45.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/sanrio-hello-kitty-friends-hello-kitty-21inch-sitting-plush-toy","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO True Wireless Speaker Purple Earphones","c":"数码配件","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":19.99,"op":24.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/pea-series-clip-on-wireless-earphones-model-h99-purple","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Hufflepuff Metal Sticker Set (B)","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":0.99,"op":1.99,"st":"确认打折","dp":50.3,"u":"https://minisoshop.co.uk/harry-potter-collection-metal-sticker-set-b-hufflepuff","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Disney Collection Fluffy Festival Blueberry Milk LED Night Light","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Disney（迪士尼）","cp":6.99,"op":9.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/disney-collection-fluffy-festival-blueberry-milk-led-night-light","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Hufflepuff Lunch Bag","c":"箱包配饰","oc":"箱包配饰","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":6.99,"op":9.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/harry-potter-lunch-bag-yellow","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Hufflepuff Rectangle Makeup Bag","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":6.99,"op":9.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/harry-potter-rectangle-makeup-bag-black","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Astronauts Black & Gold Liquid Keychain","c":"钥匙扣","oc":"收藏玩具","cs":"名称规则","ip":"未识别","cp":2.49,"op":3.49,"st":"确认打折","dp":28.7,"u":"https://minisoshop.co.uk/black-golden-astronaut-liquid-keychain","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Golden Snitch Dual Sided Mirror","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.99,"op":4.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/harry-potter-golden-snitch-dual-sided-mirror","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Hogwarts Large Insulated Double Wall Water Bottle 1.08l","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":13.49,"op":17.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-large-capacity-double-wall-insulated-bottle-1-08l-black","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Gold Studded Steel Tumbler 650ml with Straw","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":19.49,"op":29.99,"st":"确认打折","dp":35.0,"u":"https://minisoshop.co.uk/harry-potter-studded-steel-tumbler-with-straw-650ml-golden","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Plastic Tumbler with Straw 1250ml Red","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":13.49,"op":17.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-extra-large-plastic-bottle-with-straw-1250ml-red","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Glass Tumbler Set 390ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":14.99,"op":21.99,"st":"确认打折","dp":31.8,"u":"https://minisoshop.co.uk/harry-potter-collection-glass-cup-set-390ml","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Care Bears Collection Purple Stainless Steel Tumbler with Straw 800ml","c":"杯壶水具","oc":"生活家居","cs":"名称规则","ip":"Care Bears（爱心小熊）","cp":5.49,"op":10.99,"st":"确认打折","dp":50.0,"u":"https://minisoshop.co.uk/care-bears-collection-stainless-steel-tumbler-with-straw-800ml-purple","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Care Bears Collection Pink Stainless Steel Tumbler & Straw 800ml","c":"杯壶水具","oc":"生活家居","cs":"名称规则","ip":"Care Bears（爱心小熊）","cp":5.49,"op":10.99,"st":"确认打折","dp":50.0,"u":"https://minisoshop.co.uk/care-bears-collection-stainless-steel-tumbler-with-straw-800ml-pink","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Sanrio Hello Kitty & Friends Apple Collection Tumbler","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":8.39,"op":11.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/hello-kitty-apple-collection-travel-bottle","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Pink Romance Series Double-Layer Straw Plastic Cup 460ml","c":"杯壶水具","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":3.49,"op":4.99,"st":"确认打折","dp":30.1,"u":"https://minisoshop.co.uk/pink-romance-series-double-layer-straw-plastic-cup-460ml","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Harry Potter Wind Bell Keychain","c":"钥匙扣","oc":"钥匙扣","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.5,"op":5.99,"st":"确认打折","dp":41.6,"u":"https://minisoshop.co.uk/harry-potter-wind-bell-keychain","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Premium Double Sided Desktop Vanity Mirror","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"未识别","cp":3.99,"op":8.99,"st":"确认打折","dp":55.6,"u":"https://minisoshop.co.uk/premium-double-sided-desktop-vanity-mirror","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Travel Container 10 Piece Bottle Travel Set","c":"杯壶水具","oc":"出行旅行","cs":"名称规则","ip":"未识别","cp":2.79,"op":3.99,"st":"确认打折","dp":30.1,"u":"https://minisoshop.co.uk/container-bottle-travel-set-11pieces","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Water Soluble Chocolate Brown Double Headed Colouring Pen","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":0.59,"op":0.99,"st":"确认打折","dp":40.4,"u":"https://minisoshop.co.uk/water-soluble-double-headed-colored-pen-chocolate","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"iPhone 11 Pro Black Phone Case","c":"数码配件","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":1.99,"op":2.5,"st":"确认打折","dp":20.4,"u":"https://minisoshop.co.uk/phone-case-new-iphone-11-pro","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO AAA Carbon Zinc Batteries 10 Pack","c":"数码配件","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":1.49,"op":3.99,"st":"确认打折","dp":62.7,"u":"https://minisoshop.co.uk/aaa-batteries-10-pack","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Blue Fiber Tip Pen","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":0.99,"op":1.49,"st":"确认打折","dp":33.6,"u":"https://minisoshop.co.uk/fiber-tip-pen-blue","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Happy Valentine's Day Card (Assorted Designs)","c":"礼品","oc":"礼品","cs":"站点品类","ip":"未识别","cp":0.59,"op":0.99,"st":"确认打折","dp":40.4,"u":"https://minisoshop.co.uk/happy-valentine-s-day-baby-be-mine-card-2","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Mini Family Sports Character 3 Pack Kids Toothbrush","c":"美妆个护","oc":"生活家居","cs":"名称规则","ip":"Mini Family（名创优品自有形象）","cp":1.49,"op":3.99,"st":"确认打折","dp":62.7,"u":"https://minisoshop.co.uk/mini-family-sports-toothbrush-3-pcs","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Water Soluble Double Headed Orange Coloured Pen","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":0.59,"op":0.99,"st":"确认打折","dp":40.4,"u":"https://minisoshop.co.uk/dual-tipped-pen-orange","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Dotted Design Spoon","c":"餐厨用品","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":1.5,"op":2.99,"st":"确认打折","dp":49.8,"u":"https://minisoshop.co.uk/dotted-design-spoon","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Gunmetal Spoon","c":"餐厨用品","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":0.99,"op":2.49,"st":"确认打折","dp":60.2,"u":"https://minisoshop.co.uk/gunmetal-spoon","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Makeup Brush Set","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"未识别","cp":7.99,"op":12.99,"st":"确认打折","dp":38.5,"u":"https://minisoshop.co.uk/makeup-brush-set-wht","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO 5 Pack Little Scrunchie Hair Ties","c":"美发饰品","oc":"美妆个护","cs":"名称规则","ip":"未识别","cp":1.99,"op":3.99,"st":"确认打折","dp":50.1,"u":"https://minisoshop.co.uk/gradient-color-little-hair-tie-5pcs-yellow","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"Sanrio Hello Kitty & Friends Hello Kitty Apple Collection Glass Mug","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":4.89,"op":6.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/hello-kitty-apple-collection-glass-mug","p":"1","t":"2026-11-02T10:42:44.476627+00:00"},{"n":"MINISO Water Soluble Double Head Soft Pink Colouring Pen","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":0.59,"op":0.99,"st":"确认打折","dp":40.4,"u":"https://minisoshop.co.uk/water-soluble-double-head-colored-pen-soft-pink","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Water Soluble Double Headed Blue Colour Marker Pen","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":0.59,"op":1.99,"st":"确认打折","dp":70.4,"u":"https://minisoshop.co.uk/water-soluble-double-headed-colored-pen-blue","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Water Soluble Double Headed Green Colouring Pen","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":0.59,"op":1.99,"st":"确认打折","dp":70.4,"u":"https://minisoshop.co.uk/water-soluble-double-headed-colored-pen-green","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends My Melody Lint Roller","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":3.89,"op":7.99,"st":"确认打折","dp":51.3,"u":"https://minisoshop.co.uk/my-melody-lint-roller","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Rose Gold Series Paper Clips (80 Pcs) PDQ","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":1.25,"op":2.5,"st":"确认打折","dp":50.0,"u":"https://minisoshop.co.uk/rose-gold-series-paper-clips-80-pcs-pdq","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Sparkling Star Series Eyebrow Tweezer 2 Piece Set","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"未识别","cp":1.99,"op":3.99,"st":"确认打折","dp":50.1,"u":"https://minisoshop.co.uk/sparkling-star-series-eyebrow-tweezer-set-2-pcs","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Rose Gold Dessert Fork","c":"餐厨用品","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":0.99,"op":1.25,"st":"确认打折","dp":20.8,"u":"https://minisoshop.co.uk/rose-gold-dessert-fork","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO 5 Piece Makeup Sponge & Makeup Brush Set","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"未识别","cp":2.99,"op":8.99,"st":"确认打折","dp":66.7,"u":"https://minisoshop.co.uk/luxury-series-5-piece-makeup-sponge-makeup-brush-multifunctional-set","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Ballpoint Black Pen with Cap 10 Pack","c":"文具","oc":"文具","cs":"名称规则","ip":"未识别","cp":1.25,"op":2.49,"st":"确认打折","dp":49.8,"u":"https://minisoshop.co.uk/ballpoint-pen-with-cap-10-pack-black","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Kuromi Round Hand Towel","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":2.49,"op":3.99,"st":"确认打折","dp":37.6,"u":"https://minisoshop.co.uk/kuromi-round-hand-towel","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends Kuromi Ultra Soft Head Pillow","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":17.59,"op":21.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/kuromi-series-ultra-soft-kuromi-pillow","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends Character Head Shaped Pillow","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":15.99,"op":19.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/sanrio-character-head-shape-pillow-hello-kitty","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends Apple Collection Red Tote Bag","c":"箱包配饰","oc":"生活家居","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":4.89,"op":6.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/hello-kitty-apple-collection-shopping-bag-red","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Rose Gold Tea Spoon","c":"餐厨用品","oc":"生活家居","cs":"名称规则","ip":"未识别","cp":0.99,"op":1.25,"st":"确认打折","dp":20.8,"u":"https://minisoshop.co.uk/rose-gold-tea-spoon","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"MINISO Sparkling Star Series Mini Eyeshadow 5 Piece Brush Set","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"未识别","cp":2.99,"op":4.99,"st":"确认打折","dp":40.1,"u":"https://minisoshop.co.uk/sparkling-star-series-mini-eyeshadow-brush-set-5-pcs","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends Cinnamoroll Disposable Bath Towel 2 Piece","c":"家居用品","oc":"生活家居","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":4.99,"op":null,"st":"无法判断","dp":null,"u":"https://minisoshop.co.uk/bath-towels-2-pc","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends My Melody Tumbler & Strap 535ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":6.99,"op":9.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/tumbler-strap-535mlmy-melody","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Sanrio Hello Kitty & Friends My Melody Desk Storage Drawer","c":"家居用品","oc":"家居饰品","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":15.99,"op":19.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/drawer-lmy-melody","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Hedwig 16 Inch Plush Pillow","c":"毛绒玩具","oc":"毛绒玩具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":10.49,"op":13.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-16in-hedwig-pillow","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Honey Jar Keychain (Assorted Characters)","c":"钥匙扣","oc":"钥匙扣","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.99,"op":7.99,"st":"确认打折","dp":37.5,"u":"https://minisoshop.co.uk/harry-potter-honey-jar-keychain","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Green Double Wall Plastic Tumbler & Straw 800ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":7.49,"op":9.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-collection-double-wall-plastic-tumbler-with-straw-800ml-green","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Collection TWS Magnetic True Wireless Speaker BT2026 Black","c":"数码配件","oc":"数码配件","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":19.59,"op":27.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/harry-potter-collection-tws-magnetic-wireless-speaker-model-bt2026-black","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Hermione Granger Essential Collection Wand","c":"收藏玩具","oc":"收藏玩具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":17.5,"op":24.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/essential-collection-wand-hermione-granger","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Ravenclaw Cloak","c":"服饰配件","oc":"服饰配件","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":25.99,"op":31.49,"st":"确认打折","dp":17.5,"u":"https://minisoshop.co.uk/harry-potter-cloak-ravenclaw","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Collection Rectangle Cosmetic Bag","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":7.49,"op":9.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-collection-rectangle-cosmetic-bag","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Hedwig Owl Shape Ceramic Cup & Spoon 430ml","c":"餐厨用品","oc":"餐厨用品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":9.74,"op":12.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-collection-owl-shape-ceramic-cup-with-spoon-430ml","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Ravenclaw Steel Tumbler with Charm & Straw 580ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":11.24,"op":14.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-collection-steel-tumbler-with-charm-and-straw-580ml-blue","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Hermione Granger Desk Phone Holder","c":"数码配件","oc":"数码配件","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.24,"op":6.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-phone-holder-for-desk-hermione","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Golden Snitch Metal Figure Black Ballpoint Pen","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.24,"op":6.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-metal-figure-ballpoint-pen-0-7mm-black-golden-snitch","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Slytherin Steel Tumbler with Charm & Straw 580ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":11.24,"op":14.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-collection-steel-tumbler-with-charm-and-straw-580ml-green","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter School Rotatory Metal Keychain","c":"钥匙扣","oc":"钥匙扣","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.99,"op":7.99,"st":"确认打折","dp":37.5,"u":"https://minisoshop.co.uk/harry-potter-school-rotatory-metal-keychain","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Slytherin Lip Oil (03)","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.49,"op":5.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-lip-oil-03","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Ravenclaw Lip Oil (01)","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.49,"op":5.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-lip-oil-01","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Gryffindor Lip Oil (02)","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.49,"op":5.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-lip-oil-02","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Platform 9 3/4 Plush Pendant","c":"毛绒玩具","oc":"毛绒玩具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.24,"op":6.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-plush-pendant-platform-nine-and-three-quarters","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Mint Lip Mask","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.74,"op":4.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-lip-mask-mint","p":"2","t":"2026-11-02T10:51:46.369751+00:00"},{"n":"Harry Potter Avocado Lip Mask","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.74,"op":4.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-lip-mask-avocado","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Gryffindor Ankle Socks 3 Pairs","c":"服饰配件","oc":"服饰配件","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.99,"op":7.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-ankle-socks-3-pairs-gryffindor","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter The Goblet Of Fire Keychain","c":"钥匙扣","oc":"钥匙扣","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.99,"op":7.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-the-goblet-of-fire-keychain","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Blue Lantern Night Light","c":"家居用品","oc":"家居饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.22,"op":4.29,"st":"确认打折","dp":24.9,"u":"https://minisoshop.co.uk/harry-potter-lantern-night-light-blue","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Ravenclaw 4 Pairs Crew Socks in Box","c":"服饰配件","oc":"服饰配件","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.24,"op":6.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-4-pairs-crew-socks-in-box-ravenclaw","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hufflepuff Bento Box 1000ml","c":"餐厨用品","oc":"餐厨用品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.24,"op":6.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-collection-bento-box-1000ml-hufflepuff","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Gryffindor Black Metal Ballpoint Pen","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.99,"op":6.99,"st":"确认打折","dp":42.9,"u":"https://minisoshop.co.uk/harry-potter-metal-ballpoint-pen-0-5mm-black-gryffindor","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Playing Cards PDQ","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.99,"op":3.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-playing-cards-pdq","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hogwarts Plastic Black Cool Water Bottle With Handle 800ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.49,"op":5.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-plastic-cool-water-bottle-with-handle-800ml-black","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Platform 9 3/4 2-in-1 Trolley Cart","c":"箱包配饰","oc":"箱包配饰","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":6.74,"op":8.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-2-in-1-cart","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Ravenclaw Horcrux Keychain","c":"钥匙扣","oc":"钥匙扣","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":5.24,"op":6.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-horcrux-keychain-ravenclaw","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Gryffindor Horcrux Keychain","c":"钥匙扣","oc":"钥匙扣","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.5,"op":5.99,"st":"确认打折","dp":41.6,"u":"https://minisoshop.co.uk/harry-potter-horcrux-keychain-gryffindor","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Coloring Plaster Figure (C)","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.74,"op":4.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-coloring-plaster-figure-c","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hufflepuff False Nails","c":"美妆个护","oc":"美妆个护","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.99,"op":4.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/harry-potter-false-nails-hufflepuff","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hair Accessories Set 5 pcs (Hufflepuff)","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.99,"op":10.99,"st":"确认打折","dp":54.6,"u":"https://minisoshop.co.uk/harry-potter-hair-accessories-set-5-pcs-hufflepuff","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Slytherin Lunch Bag","c":"箱包配饰","oc":"箱包配饰","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":7.49,"op":9.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-lunch-bag-green","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Slytherin Men's Athletic Ankle Socks (3 Pairs)","c":"服饰配件","oc":"服饰配件","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.99,"op":3.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-men-s-athletic-ankle-socks-3-pairs-slytherin","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hair Accessories Set 6 pcs (Gryffindor)","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":8.24,"op":10.99,"st":"确认打折","dp":25.0,"u":"https://minisoshop.co.uk/harry-potter-hair-accessories-set-6-pcs-gryffindor","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Slytherin Bento Box 1000ml","c":"餐厨用品","oc":"餐厨用品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":4.99,"op":6.99,"st":"确认打折","dp":28.6,"u":"https://minisoshop.co.uk/harry-potter-collection-bento-box-1000ml-slytherin","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Raster Sticker Set (B)","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.5,"op":3.99,"st":"确认打折","dp":37.3,"u":"https://minisoshop.co.uk/harry-potter-collection-raster-sticker-set-b","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Gryffindor Badge Hair Clip","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.99,"op":3.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-badge-hair-clip-gryffindor","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Slytherin Badge Hair Clip","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.99,"op":3.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-badge-hair-clip-slytherin","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Dobby Plush Hair Band","c":"毛绒玩具","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.74,"op":4.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-plush-hair-hoop-dobby","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Sorting Hat Plush Head Band","c":"毛绒玩具","oc":"毛绒玩具","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":3.74,"op":4.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-plush-hair-hoop-sorting-hat","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Colouring Suncatcher (2 Assorted Colours)","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":1.99,"op":2.49,"st":"确认打折","dp":20.1,"u":"https://minisoshop.co.uk/harry-potter-coloring-suncatcher-2-assorted-models-b","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Colouring Suncatcher (2 Assorted Colours)","c":"文具","oc":"文具手作","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":1.87,"op":2.49,"st":"确认打折","dp":24.9,"u":"https://minisoshop.co.uk/harry-potter-coloring-suncatcher-2-assorted-models-a","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hufflepuff Badge Hair Clip","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.99,"op":3.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-badge-hair-clip-hufflepuff","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Ravenclaw Badge Hair Clip","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.99,"op":3.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-badge-hair-clip-ravenclaw","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Slytherin Hair Tie","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":1.99,"op":2.99,"st":"确认打折","dp":33.4,"u":"https://minisoshop.co.uk/harry-potter-hair-tie-slytherin","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Slytherin Badge Hair Tie","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":1.5,"op":2.99,"st":"确认打折","dp":49.8,"u":"https://minisoshop.co.uk/harry-potter-badge-hair-tie-slytherin","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Hufflepuff Hair Tie","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.24,"op":2.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-hair-tie-hufflepuff","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Harry Potter Ravenclaw Hair Tie","c":"美发饰品","oc":"美发饰品","cs":"名称规则","ip":"Harry Potter（哈利波特）","cp":2.24,"op":2.99,"st":"确认打折","dp":25.1,"u":"https://minisoshop.co.uk/harry-potter-hair-tie-ravenclaw","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Sanrio Hello Kitty & Friends Christmas 3D Greeting Card","c":"礼品","oc":"礼品","cs":"名称规则","ip":"Sanrio（三丽鸥）","cp":1.49,"op":2.99,"st":"确认打折","dp":50.2,"u":"https://minisoshop.co.uk/sanrio-characters-christmas-collection-3d-greeting-card-17","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"Disney Lilo & Stitch Collection Stitch Portable Tumbler 435ml","c":"杯壶水具","oc":"生活家居","cs":"名称规则","ip":"Disney（迪士尼）","cp":7.99,"op":9.99,"st":"确认打折","dp":20.0,"u":"https://minisoshop.co.uk/disney-lilo-stitch-collection-portable-tumbler-435ml-stitch","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"We Bare Bears Seaside Music Festival Ice Bear Double Wall Plastic Tumbler With Straw 800ml","c":"杯壶水具","oc":"杯壶水具","cs":"名称规则","ip":"We Bare Bears（咱们裸熊）","cp":6.99,"op":9.99,"st":"确认打折","dp":30.0,"u":"https://minisoshop.co.uk/we-bare-bears-seaside-music-festival-double-wall-plastic-tumbler-with-straw-800ml-ice-bear","p":"3","t":"2026-11-02T10:51:55.714851+00:00"},{"n":"We Bare Bears Seaside Music Festival Grizz Double Wall Plastic Tumbler with Straw (800ml)","c":"杯壶水具","oc":"生活家居","cs":"名称规则","ip":"We Bare Bears（咱们裸熊）","cp":6.99,"op":10.99,"st":"确认打折","dp":36.4,"u":"https://minisoshop.co.uk/we-bare-bears-seaside-music-festival-double-wall-plastic-tumbler-with-straw-800ml-grizz","p":"3","t":"2026-11-02T10:51:55.714851+00:00"}];
+
+const BANDS = [
+  {label:"£0 – £4.99", lo:0, hi:4.99},
+  {label:"£5 – £9.99", lo:5, hi:9.99},
+  {label:"£10 – £14.99", lo:10, hi:14.99},
+  {label:"£15 – £19.99", lo:15, hi:19.99},
+  {label:"£20 – £29.99", lo:20, hi:29.99},
+  {label:"£30 及以上", lo:30, hi:Infinity}
+];
+
+const money = v => (v === null || v === undefined) ? "—" : "£" + v.toFixed(2);
+const pctText = (a, b) => b === 0 ? "—" : (a / b * 100).toFixed(1) + "%";
+
+function median(nums){
+  if(!nums.length) return null;
+  const s = [...nums].sort((a,b)=>a-b);
+  const m = Math.floor(s.length/2);
+  return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2;
+}
+
+function groupCount(rows, key){
+  const map = new Map();
+  rows.forEach(r => map.set(r[key], (map.get(r[key]) || 0) + 1));
+  return [...map.entries()].sort((a,b) => b[1] - a[1]);
+}
+
+function fillSelect(el, values, allLabel){
+  el.innerHTML = "";
+  const opt = document.createElement("option");
+  opt.value = ""; opt.textContent = allLabel;
+  el.appendChild(opt);
+  values.forEach(v => {
+    const o = document.createElement("option");
+    o.value = v; o.textContent = v;
+    el.appendChild(o);
+  });
+}
+
+function renderBars(container, items, valueText, cls){
+  if(!items.length){ container.innerHTML = '<div class="empty">当前筛选无数据</div>'; return; }
+  const max = Math.max(...items.map(i => i.value));
+  container.innerHTML = items.map(i => {
+    const w = max > 0 ? (i.value / max * 100) : 0;
+    return '<div class="bar-row">'
+      + '<span class="bar-label" title="' + i.label + '">' + i.label + '</span>'
+      + '<div class="bar-track"><div class="bar-fill ' + (cls||"") + '" style="width:' + w.toFixed(1) + '%"></div></div>'
+      + '<span class="bar-value">' + valueText(i) + '</span></div>';
+  }).join("");
+}
+
+function currentRows(){
+  const q = document.getElementById("f-search").value.trim().toLowerCase();
+  const cat = document.getElementById("f-cat").value;
+  const ip = document.getElementById("f-ip").value;
+  const st = document.getElementById("f-st").value;
+  let rows = DATA.filter(r =>
+    (!q || r.n.toLowerCase().includes(q)) &&
+    (!cat || r.c === cat) &&
+    (!ip || r.ip === ip) &&
+    (!st || r.st === st)
+  );
+  const sort = document.getElementById("f-sort").value;
+  rows.sort((a,b) => {
+    if(sort === "price-asc")  return (a.cp ?? Infinity) - (b.cp ?? Infinity);
+    if(sort === "price-desc") return (b.cp ?? -1) - (a.cp ?? -1);
+    if(sort === "discount-desc") return (b.dp ?? -1) - (a.dp ?? -1);
+    return a.n.localeCompare(b.n);
+  });
+  return rows;
+}
+
+function render(){
+  const rows = currentRows();
+
+  // KPI
+  const total = rows.length;
+  const withPrice = rows.filter(r => r.cp !== null);
+  const med = median(withPrice.map(r => r.cp));
+  const discounted = rows.filter(r => r.st === "确认打折").length;
+  const judgeable = rows.filter(r => r.st === "确认打折" || r.st === "确认未打折").length;
+
+  document.getElementById("kpi-count").textContent = total;
+  document.getElementById("kpi-count-den").textContent =
+    "全样本 " + DATA.length + " 条";
+
+  const times = rows.map(r => r.t).filter(Boolean).sort();
+  document.getElementById("kpi-time").textContent = times.length
+    ? times[0].slice(0,16).replace("T"," ") + " → " + times[times.length-1].slice(11,16)
+    : "—";
+  document.getElementById("kpi-time").nextElementSibling.textContent = times.length
+    ? "起始 " + times[0].slice(0,10) + "，仅本次采集窗口"
+    : "当前筛选无采集时间";
+
+  document.getElementById("kpi-median").textContent = money(med);
+  document.getElementById("kpi-median-den").textContent =
+    "分母 = 现价有效 " + withPrice.length + " 条（" + money(Math.min(...withPrice.map(r=>r.cp)))
+    + " – " + money(Math.max(...withPrice.map(r=>r.cp))) + "）";
+
+  document.getElementById("kpi-discount").textContent = pctText(discounted, total);
+  document.getElementById("kpi-discount-den").textContent =
+    discounted + "/" + total + " 条；占可判断商品 "
+    + (judgeable ? pctText(discounted, judgeable) : "—") + "（可判断 " + judgeable + " 条）";
+
+  // 图表
+  const bandItems = BANDS.map(b => ({
+    label: b.label,
+    value: withPrice.filter(r => r.cp >= b.lo && r.cp <= b.hi).length
+  }));
+  document.getElementById("hint-band").textContent =
+    "分母 = 现价有效 " + withPrice.length + " 条";
+  renderBars(document.getElementById("chart-band"), bandItems,
+    i => i.value + " 条 · " + pctText(i.value, withPrice.length));
+
+  const catItems = groupCount(rows, "c").map(([k,v]) => ({label:k, value:v}));
+  document.getElementById("hint-cat").textContent = "分母 = " + total + " 条";
+  renderBars(document.getElementById("chart-cat"), catItems,
+    i => i.value + " 条 · " + pctText(i.value, total), "alt");
+
+  const catPrice = {};
+  withPrice.forEach(r => (catPrice[r.c] = catPrice[r.c] || []).push(r.cp));
+  const catPriceItems = Object.entries(catPrice)
+    .map(([k,v]) => ({label:k, value:median(v), n:v.length}))
+    .sort((a,b) => b.value - a.value);
+  document.getElementById("hint-catprice").textContent =
+    "按中位数由高到低；柱长按最大值等比缩放";
+  renderBars(document.getElementById("chart-catprice"), catPriceItems,
+    i => money(i.value) + " (" + i.n + ")");
+
+  const ipItems = groupCount(rows, "ip").map(([k,v]) => ({label:k, value:v}));
+  document.getElementById("hint-ip").textContent =
+    "分母 = " + total + " 条；保留“未识别”";
+  renderBars(document.getElementById("chart-ip"), ipItems,
+    i => i.value + " 条 · " + pctText(i.value, total), "green");
+
+  // 明细表
+  document.getElementById("table-count").textContent =
+    "当前显示 " + rows.length + " 条（全样本 " + DATA.length + " 条）";
+  const tbody = document.getElementById("tbody");
+  const empty = document.getElementById("empty");
+  if(!rows.length){
+    tbody.innerHTML = "";
+    empty.style.display = "block";
+    empty.innerHTML = "<strong>没有符合条件的商品</strong>"
+      + "请尝试清空搜索词，或把品类 / IP / 折扣状态改回“全部”，"
+      + "也可以点击“重置筛选”恢复全样本。";
+    document.querySelector(".table-scroll").style.display = "none";
+    return;
+  }
+  empty.style.display = "none";
+  document.querySelector(".table-scroll").style.display = "block";
+  const tagCls = s => s === "确认打折" ? "ok" : (s === "无法判断" ? "warn" : "gray");
+  tbody.innerHTML = rows.map(r => {
+    const nameCell = r.u
+      ? '<a href="' + r.u + '" target="_blank" rel="noopener">' + r.n + "</a>"
+      : r.n;
+    return "<tr>"
+      + "<td>" + nameCell + "</td>"
+      + '<td title="原始分类：' + r.oc + '">' + r.c + "</td>"
+      + "<td>" + r.ip + "</td>"
+      + '<td class="num">' + money(r.cp) + "</td>"
+      + '<td class="num">' + (r.op === null ? "—" : money(r.op)) + "</td>"
+      + '<td class="num">' + (r.st === "确认打折" ? r.dp.toFixed(1) + "%" : "—") + "</td>"
+      + '<td><span class="tag ' + tagCls(r.st) + '">' + r.st + "</span></td>"
+      + '<td><a href="https://minisoshop.co.uk/shop' + (r.p === "1" ? "" : "?p=" + r.p)
+      + '" target="_blank" rel="noopener">第 ' + r.p + " 页</a></td>"
+      + "</tr>";
+  }).join("");
+}
+
+function init(){
+  fillSelect(document.getElementById("f-cat"),
+    [...new Set(DATA.map(r => r.c))].sort(), "全部品类");
+  fillSelect(document.getElementById("f-ip"),
+    [...new Set(DATA.map(r => r.ip))].sort(), "全部 IP");
+  fillSelect(document.getElementById("f-st"),
+    [...new Set(DATA.map(r => r.st))].sort(), "全部状态");
+
+  ["f-search","f-cat","f-ip","f-st","f-sort"].forEach(id =>
+    document.getElementById(id).addEventListener("input", render));
+  document.getElementById("btn-reset").addEventListener("click", () => {
+    document.getElementById("f-search").value = "";
+    ["f-cat","f-ip","f-st"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("f-sort").value = "price-asc";
+    render();
+  });
+  document.getElementById("th-price").addEventListener("click", () => {
+    const sel = document.getElementById("f-sort");
+    sel.value = sel.value === "price-asc" ? "price-desc" : "price-asc";
+    render();
+  });
+  document.getElementById("th-discount").addEventListener("click", () => {
+    document.getElementById("f-sort").value = "discount-desc"; render();
+  });
+  document.getElementById("th-name").addEventListener("click", () => {
+    document.getElementById("f-sort").value = "name-asc"; render();
+  });
+  render();
+}
+init();
+</script>
+</body>
+</html>

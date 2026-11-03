@@ -1,0 +1,27 @@
+[
+  {
+    "page": 1,
+    "source_url": "https://minisoshop.co.uk/shop",
+    "html_file": "shop_browser.html",
+    "collected_at": "2026-11-02T10:42:44.476627+00:00",
+    "note": "由 open_shop_page.py 采集"
+  },
+  {
+    "page": 2,
+    "source_url": "https://minisoshop.co.uk/shop?p=2",
+    "html_file": "shop_page2.html",
+    "collected_at": "2026-11-02T10:51:46.369751+00:00",
+    "http_status": 200,
+    "card_count": 37,
+    "timed_out": false
+  },
+  {
+    "page": 3,
+    "source_url": "https://minisoshop.co.uk/shop?p=3",
+    "html_file": "shop_page3.html",
+    "collected_at": "2026-11-02T10:51:55.714851+00:00",
+    "http_status": 200,
+    "card_count": 37,
+    "timed_out": false
+  }
+]

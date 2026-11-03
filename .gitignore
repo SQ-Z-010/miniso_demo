@@ -1,6 +1,10 @@
+# 虚拟环境与 Python 缓存
 .venv/
 __pycache__/
 *.py[cod]
+
+# 密钥与本地环境配置
 .env
-data/*
-!data/.gitkeep
+
+# 浏览器运行产生的用户目录（含 Cookie 与缓存，不入库）
+data/browser-profile/
